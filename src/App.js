@@ -1,9 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import CourseEditor from "./components/CourseEditor/CourseEditor";
+import CourseManager from "./Container/CourseManager";
 
 const App = () =>
-    <CourseEditor/>
+    <CourseManager />
 
 export default App;

@@ -28,3 +28,7 @@ html,body{
 .btn-warning{
     margin-left: 7px;
 }
+
+#add-widget{
+    margin-right: 1rem;
+}
