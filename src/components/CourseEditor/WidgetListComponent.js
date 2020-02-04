@@ -1,5 +1,5 @@
 import React from "react";
-const WidgetList = () =>
+const WidgetListComponent = () =>
     <div className="card my-3">
         <div className="card-body">
             <button type="button" className="btn btn-danger float-right wbdv-module-item-add-btn"><i
@@ -19,4 +19,4 @@ const WidgetList = () =>
             <h1>Heading Text</h1>
         </div>
     </div>
-export default WidgetList;
+export default WidgetListComponent;

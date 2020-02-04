@@ -1,6 +1,6 @@
 import React from "react";
 
-const LessonTab = () =>
+const LessonTabComponent = () =>
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <button type="button" className="close navbar-brand wbdv-course-editor wbdv-close" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -24,4 +24,4 @@ const LessonTab = () =>
         </div>
     </nav>
 
-export default LessonTab;
+export default LessonTabComponent;

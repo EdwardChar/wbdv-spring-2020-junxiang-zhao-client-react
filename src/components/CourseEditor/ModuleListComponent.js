@@ -1,6 +1,6 @@
 import React from "react";
 
-const ModuleList = () =>
+const ModuleListComponent = () =>
     <div className="col-3 pl-4 pr-3 py-3 sideArea wbdv-module-list">
         <div className="card text-white bg-secondary my-2 wbdv-module-item">
             <div className="card-body">
@@ -30,4 +30,4 @@ const ModuleList = () =>
             className="fas fa-plus"></i></button>
     </div>
 
-export default ModuleList;
+export default ModuleListComponent;

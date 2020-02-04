@@ -1,9 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import CourseManager from "./Container/CourseManager";
+import CourseManagerContainer from "./Container/CourseManagerContainer";
 
 const App = () =>
-    <CourseManager />
+    <CourseManagerContainer />
 
 export default App;
