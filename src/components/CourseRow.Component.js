@@ -1,49 +1,50 @@
 import React from "react";
-import "./CourseManager.css"
-import {deleteCourse, createCourse, findAllCourses} from "../services/CourseServices.js";
-import CourseTableContainer from "./CourseTable.Container";
+import {updateCourse} from "../services/CourseServices";
+import "./CourseRow.css"
 
-class CourseManagerContainer extends React.Component {
+class CourseTableRow extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     state = {
-        course: "CS5610",
-    };
+        selected: false
+    }
 
-    componentDidMount = async () => {
-
-        const allCourses = await findAllCourses()
+    select = () => {
         this.setState({
-            courses: allCourses
+            selected: !this.state.selected
         })
-
-        // findAllCourses()
-        //     .then(courses => this.setState({
-        //         courses: courses
-        //     }))
-    };
+    }
 
     render() {
         return (
-            <div>
-                <nav className="navbar navbar-expand-lg navbar-light">
-                    <i className="fas fa-bars mr-3 wbdv-field wbdv-hamburger"></i>
-                    <label htmlFor="newCourse" className="navbar-brand wbdv-label wbdv-course-manager" href="#">Course
-                        Manager</label>
-                    <form className="form-inline my-2 my-lg-0 w-100">
-                        <input className="form-control mr-sm-2" id="newCourse"
-                               placeholder="New Course Title" />
-                        <button className="btn bg-transparent my-2 my-sm-0 align-right wbdv-button wbdv-add-course"
-                                type="submit">
-                                <span className="fa-stack">
-                                <i className="fas fa-circle fa-stack-2x text-danger"></i>
-                                <i className="fas fa-plus fa-stack-1x fa-inverse"></i>
-                                </span>
-                        </button>
-                    </form>
-                </nav>
-                <CourseTableContainer/>
-            </div>
+            <li onClick={this.select} className={this.state.selected ? "list-group-item active" : "list-group-item"}>
+                <div className="row wbdv-row wbdv-course">
+                    <div className="ml-3 wbdv-row wbdv-icon">
+                        <i className="fas fa-file-alt"></i>
+                    </div>
+                    <div className="col-5 wbdv-row wbdv-title">
+                        CS5500
+                    </div>
+                    <div className="col-2 wbdv-row wbdv-owner">
+                        me
+                    </div>
+                    <div className="col-1 wbdv-row wbdv-modified-date">
+                        6:00 PM
+                    </div>
+                    <div className="justify-content-end col">
+                        <div className="float-right wbdv-row wbdv-button wbdv-delete">
+                            <i className="fas fa-trash-alt"></i>
+                        </div>
+                        <div className="float-right wbdv-row wbdv-button mx-2">
+                            <i className="fas fa-pencil-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </li>
         );
     }
 }
 
-export default CourseManagerContainer;
+export default CourseTableRow;

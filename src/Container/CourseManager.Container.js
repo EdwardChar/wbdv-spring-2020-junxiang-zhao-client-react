@@ -1,7 +1,7 @@
 import React from "react";
 import "./CourseManager.css"
 import {deleteCourse, createCourse, findAllCourses} from "../services/CourseServices.js";
-import CourseTableContainer from "./CourseTable.Container";
+import CourseTableContainer from "../Components/CourseTable.Component";
 
 class CourseManagerContainer extends React.Component {
     state = {
@@ -23,6 +23,59 @@ class CourseManagerContainer extends React.Component {
         //         courses: courses
         //     }))
     };
+
+    addCourse = async () =>
+    {
+        const newCourse = {
+            title: this.state.newCourseTitle
+        }
+        const actualCourse = await createCourse(newCourse)
+        console.log(actualCourse)
+        const allCourses = await findAllCourses()
+        this.setState({
+            courses: allCourses
+        })
+    };
+
+    deleteCourse = async (deletedCourse) => {
+        const status = await deleteCourse(deletedCourse._id)
+        const courses = await findAllCourses()
+        this.setState({
+            courses: courses
+        })
+        // this.setState(prevState => ({
+        //     courses: prevState.courses.filter(course => course._id !== deletedCourse._id)
+        // }))
+    };
+
+    showCourseEditor = () =>
+        this.setState({
+            editingCourse: true
+        });
+
+    hideCourseEditor = () =>
+        this.setState({
+            editingCourse: false
+        });
+
+    toggle = () => {
+        this.setState((prevState) => {
+            if (prevState.layout === 'grid') {
+                return {
+                    layout: 'table'
+                }
+            } else {
+                return {
+                    layout: 'grid'
+                }
+            }
+        })
+    }
+
+    updateForm = (e) =>
+        this.setState({
+            newCourseTitle: e.target.value
+        })
 
     render() {
         return (
@@ -68,9 +121,7 @@ class CourseManagerContainer extends React.Component {
                         </div>
                     </div>
                 </nav>
-                <div className = "container" >
                 <CourseTableContainer/>
-                </div>
             </div>
         );
     }
