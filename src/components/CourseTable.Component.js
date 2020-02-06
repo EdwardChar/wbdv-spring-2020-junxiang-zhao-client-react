@@ -17,4 +17,5 @@ const CourseTableComponent = ({courses, deleteCourse, showCourseEditor}) =>
             }
         </ul>
     </div>
+
 export default CourseTableComponent

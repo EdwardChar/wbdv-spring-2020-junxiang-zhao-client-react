@@ -15,7 +15,7 @@ class CourseManagerContainer extends React.Component {
 
     componentDidMount = async () => {
 
-        const allCourses = await findAllCourses()
+        const allCourses = await findAllCourses();
         this.setState({
             courses: allCourses
         })
@@ -25,10 +25,10 @@ class CourseManagerContainer extends React.Component {
     {
         const newCourse = {
             title: this.state.newCourseTitle
-        }
-        const actualCourse = await createCourse(newCourse)
-        console.log(actualCourse)
-        const allCourses = await findAllCourses()
+        };
+        const actualCourse = await createCourse(newCourse);
+        console.log(actualCourse);
+        const allCourses = await findAllCourses();
         this.setState({
             courses: allCourses
         })
@@ -40,9 +40,6 @@ class CourseManagerContainer extends React.Component {
         this.setState({
             courses: courses
         })
-        // this.setState(prevState => ({
-        //     courses: prevState.courses.filter(course => course._id !== deletedCourse._id)
-        // }))
     };
 
     showCourseEditor = () =>
