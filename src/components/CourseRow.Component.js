@@ -1,6 +1,5 @@
 import React from "react";
 import {updateCourse} from "../services/CourseServices";
-import "./CourseRow.css"
 
 class CourseTableRow extends React.Component {
     constructor(props) {
@@ -8,14 +7,16 @@ class CourseTableRow extends React.Component {
     }
 
     state = {
-        selected: false
-    }
+        selected: false,
+        editing: false,
+        course: this.props.course
+    };
 
     select = () => {
         this.setState({
             selected: !this.state.selected
         })
-    }
+    };
 
     render() {
         return (
@@ -24,8 +25,8 @@ class CourseTableRow extends React.Component {
                     <div className="ml-3 wbdv-row wbdv-icon">
                         <i className="fas fa-file-alt"></i>
                     </div>
-                    <div className="col-5 wbdv-row wbdv-title">
-                        CS5500
+                    <div onClick={this.props.showCourseEditor} className="col-5 wbdv-row wbdv-title">
+                        {this.props.course.title}
                     </div>
                     <div className="col-2 wbdv-row wbdv-owner">
                         me

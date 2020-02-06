@@ -8,7 +8,7 @@ import WidgetListComponent from "./WidgetList.Component";
 
 const CourseEditorComponent = ({hideCourseEditor}) =>
     <div>
-        <LessonTabComponent/>
+        <LessonTabComponent hideCourseEditor={hideCourseEditor}/>
         <div className="row mainArea">
             <ModuleListComponent/>
             <div className="col my-3">

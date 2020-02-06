@@ -1,8 +1,8 @@
 import React from "react";
 
-const LessonTabComponent = () =>
+const LessonTabComponent = ({hideCourseEditor}) =>
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <button type="button" className="close navbar-brand wbdv-course-editor wbdv-close" aria-label="Close">
+        <button type="button" onClick={hideCourseEditor} className="close navbar-brand wbdv-course-editor wbdv-close" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
         <a className="navbar-brand wbdv-course-title" href="#">CS5610 - Web Dev</a>

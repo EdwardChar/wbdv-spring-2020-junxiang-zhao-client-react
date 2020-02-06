@@ -13,7 +13,15 @@ const CourseTableComponent = ({courses, deleteCourse, showCourseEditor}) =>
                 //         key={course._id}
                 //         course={course}/>
                 // })
-                <CourseTableRow/>
+                <CourseTableRow
+                    showCourseEditor={showCourseEditor}
+                    deleteCourse={deleteCourse}
+                    key="00001"
+                    course={
+                        {
+                            title: "CS5000"
+                        }
+                    }/>
             }
         </ul>
     </div>
