@@ -9,7 +9,7 @@ class CourseManagerContainer extends React.Component {
     state = {
         layout: 'table',
         editingCourse: false,
-        newCourseTitle: 'Whatever',
+        newCourseTitle: 'New Course Title',
         courses: []
     };
 
@@ -19,11 +19,6 @@ class CourseManagerContainer extends React.Component {
         this.setState({
             courses: allCourses
         })
-
-        // findAllCourses()
-        //     .then(courses => this.setState({
-        //         courses: courses
-        //     }))
     };
 
     addCourse = async () =>
@@ -88,14 +83,19 @@ class CourseManagerContainer extends React.Component {
                         Manager</label>
                     <form className="form-inline my-2 my-lg-0 w-100">
                         <input className="form-control mr-sm-2" id="newCourse"
-                               placeholder="New Course Title" />
-                            <button className="btn bg-transparent my-2 my-sm-0 align-right wbdv-button wbdv-add-course"
-                                    type="submit">
-                                <span className="fa-stack">
-                                <i className="fas fa-circle fa-stack-2x text-danger"></i>
-                                <i className="fas fa-plus fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </button>
+                               placeholder="New Course Title"
+                               onChange={
+                                   (e) => this.setState({
+                                        newCourseTitle: e.target.value
+                                    }
+                                    )}/>
+                        <button className="btn bg-transparent my-2 my-sm-0 align-right wbdv-button wbdv-add-course"
+                                onClick={this.addCourse}>
+                            <span className="fa-stack">
+                            <i className="fas fa-circle fa-stack-2x text-danger"></i>
+                            <i className="fas fa-plus fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </button>
                     </form>
                 </nav>
                 {
@@ -132,10 +132,14 @@ class CourseManagerContainer extends React.Component {
                             </nav>
                             {this.state.layout === 'table' &&
                             <CourseTableComponent
-                            showCourseEditor={this.showCourseEditor}
-                            deleteCourse={this.deleteCourse}
-                            courses={this.state.courses}/>}
-                            {this.state.layout === 'grid' && <CourseGridComponent courses={this.state.courses}/>}
+                                showCourseEditor={this.showCourseEditor}
+                                deleteCourse={this.deleteCourse}
+                                courses={this.state.courses}/>}
+                            {this.state.layout === 'grid' &&
+                            <CourseGridComponent
+                                showCourseEditor={this.showCourseEditor}
+                                deleteCourse={this.deleteCourse}
+                                courses={this.state.courses}/>}
                         </div>
                     }
 
