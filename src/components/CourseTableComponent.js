@@ -1,5 +1,5 @@
 import React from "react";
-import CourseTableRow from "./CourseRow.Component.js";
+import CourseTableRow from "./CourseRowComponent.js";
 import "./CourseTable.css";
 
 const CourseTableComponent = ({courses, deleteCourse, showCourseEditor}) =>

@@ -1,9 +1,9 @@
 import React from "react";
 import "./CourseManager.css"
 import {deleteCourse, createCourse, findAllCourses} from "../services/CourseServices.js";
-import CourseTableComponent from "../components/CourseTable.Component.js";
-import CourseGridComponent from "../components/CourseGrid.Component.js";
-import CourseEditorComponent from "../components/CourseEditor/CourseEditor.Component.js";
+import CourseTableComponent from "../components/CourseTableComponent.js";
+import CourseGridComponent from "../components/CourseGridComponent.js";
+import CourseEditorComponent from "../components/CourseEditor/CourseEditorComponent.js";
 
 class CourseManagerContainer extends React.Component {
     state = {

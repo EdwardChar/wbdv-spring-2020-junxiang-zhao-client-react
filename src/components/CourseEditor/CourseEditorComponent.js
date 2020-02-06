@@ -1,9 +1,9 @@
 import React from "react";
 import './courseEditor.style.css'
-import ModuleListComponent from "./ModuleList.Component.js";
-import LessonTabComponent from "./LessonTab.Component.js";
-import TopicPillsComponent from "./TopicPills.Component.js";
-import WidgetListComponent from "./WidgetList.Component.js";
+import ModuleListComponent from "./ModuleListComponent.js";
+import LessonTabComponent from "./LessonTabComponent.js";
+import TopicPillsComponent from "./TopicPillsComponent.js";
+import WidgetListComponent from "./WidgetListComponent.js";
 
 
 const CourseEditorComponent = ({hideCourseEditor}) =>
