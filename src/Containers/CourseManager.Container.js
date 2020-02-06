@@ -1,6 +1,6 @@
 import React from "react";
 import "./CourseManager.css"
-import {deleteCourse, createCourse, findAllCourses} from "../services/CourseServices.js";
+import {deleteCourse, createCourse, findAllCourses} from "../Services/CourseServices.js";
 import CourseTableComponent from "../Components/CourseTable.Component.js";
 import CourseGridComponent from "../Components/CourseGrid.Component.js";
 import CourseEditorComponent from "../Components/CourseEditor/CourseEditor.Component.js";

@@ -1,5 +1,5 @@
 import React from "react";
-import {updateCourse} from "../services/CourseServices.js";
+import {updateCourse} from "../Services/CourseServices.js";
 
 class CourseTableRow extends React.Component {
     constructor(props) {

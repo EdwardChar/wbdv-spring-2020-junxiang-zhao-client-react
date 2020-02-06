@@ -2,6 +2,7 @@
   "name": "wbdv-spring-2020-junxiang-zhao-client-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "engines": {
     "node": "10.16.0"
   },
