@@ -1,4 +1,4 @@
-const API_URL = "https://wbdv-generic-server.herokuapp.com/api/mcuks/courses";
+const API_URL = "https://wbdv-generic-server.herokuapp.com/api/001057049/courses";
 
 export const updateCourse = async (courseId, course) => {
     const response = await fetch(`${API_URL}/${courseId}`, {

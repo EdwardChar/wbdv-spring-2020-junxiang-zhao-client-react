@@ -1,5 +1,5 @@
 import React from "react";
-import {updateCourse} from "../services/CourseServices";
+import {updateCourse} from "../services/CourseServices.js";
 
 class CourseCardComponent extends React.Component {
     constructor(props) {
@@ -17,7 +17,22 @@ class CourseCardComponent extends React.Component {
             <div>
                 <div className="card m-2">
                     <div className="card-body">
-                        <h5 className="card-title">{this.state.course.title}</h5>
+                        {   !this.state.editing &&
+                        <div onClick={this.props.showCourseEditor}>
+                            <h5 className="card-title">{this.state.course.title}</h5>
+                        </div>
+                        }
+                        {
+                            this.state.editing &&
+                            <input className="w-100"
+                                   onChange={(e) => this.setState({
+                                       course: {
+                                           ...this.state.course,
+                                           title: e.target.value
+                                       }
+                                   })}
+                                   value={this.state.course.title}/>
+                        }
                         <p className="card-text">Modified 8:00 AM</p>
                         {
                             !this.state.editing &&
@@ -26,15 +41,20 @@ class CourseCardComponent extends React.Component {
                                     onClick={() => this.props.deleteCourse(this.props.course)}>
                                     <i className="fas fa-trash-alt"></i>
                                 </div>
-                                <div className="float-right wbdv-row wbdv-button mx-2">
+                                <div className="float-right wbdv-row wbdv-button mx-2" onClick={() => this.setState({editing: true})}>
                                     <i className="fas fa-pencil-alt"></i>
                                 </div>
                             </div>
                         }
                         {
                             this.state.editing &&
-                            <div className="float-right wbdv-row wbdv-button wbdv-delete">
-                                <i className="fas fa-check-alt"></i>
+                            <div className="float-right wbdv-row wbdv-button" onClick={(e) => {
+                                updateCourse(this.state.course._id, this.state.course).then(status => {});
+                                this.setState({
+                                    editing: false
+                                })
+                            }}>
+                                <i className="fas fa-check"></i>
                             </div>
                         }
 
