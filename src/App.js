@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import CourseManagerContainer from "./Containers/CourseManager.Container";
+import CourseManagerContainer from "./containers/CourseManager.Container";
 
 const App = () =>
     <CourseManagerContainer />

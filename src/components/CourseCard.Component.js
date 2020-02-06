@@ -1,5 +1,5 @@
 import React from "react";
-import {updateCourse} from "../Services/CourseServices.js";
+import {updateCourse} from "../services/CourseServices.js";
 
 class CourseCardComponent extends React.Component {
     constructor(props) {
