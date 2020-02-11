@@ -1,11 +1,12 @@
 import React from "react";
 
-const LessonTabComponent = ({hideCourseEditor}) =>
+const LessonTabComponent = ({courseId}) =>
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <button type="button" onClick={hideCourseEditor} className="close navbar-brand wbdv-course-editor wbdv-close" aria-label="Close">
+        <a href="/"
+                className="close navbar-brand wbdv-course-editor wbdv-close" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-        </button>
-        <a className="navbar-brand wbdv-course-title" href="#">CS5610 - Web Dev</a>
+        </a>
+        <a className="navbar-brand wbdv-course-title" href="#">{courseId}</a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>

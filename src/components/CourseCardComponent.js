@@ -18,8 +18,8 @@ class CourseCardComponent extends React.Component {
                 <div className="card m-2">
                     <div className="card-body">
                         {   !this.state.editing &&
-                        <div onClick={this.props.showCourseEditor}>
-                            <h5 className="card-title">{this.state.course.title}</h5>
+                        <div>
+                            <h5 className="card-title"><a href="/course-editor/myoesi">{this.state.course.title}</a></h5>
                         </div>
                         }
                         {

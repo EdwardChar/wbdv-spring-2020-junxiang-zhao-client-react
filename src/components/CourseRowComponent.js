@@ -26,8 +26,8 @@ class CourseTableRow extends React.Component {
                         <i className="fas fa-file-alt"></i>
                     </div>
                     {   !this.state.editing &&
-                        <div onClick={this.props.showCourseEditor} className="col-5 wbdv-row wbdv-title">
-                            {this.state.course.title}
+                        <div className="col-5 wbdv-row wbdv-title">
+                            <a href="/course-editor/myoesi">{this.state.course.title}</a>
                         </div>
                     }
                     {

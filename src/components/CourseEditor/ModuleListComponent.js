@@ -1,31 +1,33 @@
 import React from "react";
 import {connect} from "react-redux";
-import {CREATE_MODULE, createModule, DELETE_MODULE, deleteModule} from "../../actions/moduleActions";
-import moduleService, {findModuleForCourse} from '../../services/ModuleService'
+import {CREATE_MODULE, createModule, DELETE_MODULE, deleteModule} from "../../actions/ModuleActions.js";
+import moduleService, {findModuleForCourse} from '../../services/ModuleServices.js'
 
-class ModuleList extends React.Component {
+class ModuleListComponent extends React.Component {
     componentDidMount() {
         this.props.findModuleForCourse(this.props.courseId)
     }
 
     render() {
         return (
-            <ul>
+            <div className="col-3 pl-4 pr-3 py-3 sideArea wbdv-module-list">
                 {this.props.modules && this.props.modules.map(module =>
-                    <li key={module._id}>
-                        <button onClick={
-                            () => this.props.deleteModule(module._id)}>
-                            Delete
-                        </button>
-                        {module.title}
-                    </li>
+                    <div className="card text-white bg-secondary my-2 wbdv-module-item" key={module._id}>
+                        <div className="card-body">
+                        <span className="wbdv-module-item-title">Module 1 - jQuery</span>
+                            <button type="button" className="close wbdv-module-item-delete-btn" aria-label="Close" onClick={
+                                () => this.props.deleteModule(module._id)}>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
                 )}
                 <li>
                     <button onClick={
                         () => this.props.createModule(this.props.courseId)}>
                         Create</button>
                 </li>
-            </ul>
+            </div>
         );
     }
 }
@@ -75,29 +77,4 @@ const dispatchToPropertyMapper = (dispatch) => {
 export default connect(
     stateToPropertyMapper,
     dispatchToPropertyMapper)
-(ModuleList)
-
-const ModuleListComponent = () =>
-    <div className="col-3 pl-4 pr-3 py-3 sideArea wbdv-module-list">
-
-        <div className="card text-white bg-secondary my-2 wbdv-module-item">
-            <div className="card-body">
-                <span className="wbdv-module-item-title">Module 2 - React</span>
-                <button type="button" className="close wbdv-module-item-delete-btn" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
-        <div className="card text-white bg-secondary my-2 wbdv-module-item">
-            <div className="card-body">
-                <span className="wbdv-module-item-title">Module 3 - Redux</span>
-                <button type="button" className="close wbdv-module-item-delete-btn" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
-        <button type="button" className="btn btn-danger float-right wbdv-module-item-add-btn"><i
-            className="fas fa-plus"></i></button>
-    </div>
-
-export default ModuleListComponent;
+(ModuleListComponent)

@@ -4,6 +4,8 @@ import {deleteCourse, createCourse, findAllCourses} from "../services/CourseServ
 import CourseTableComponent from "../components/CourseTableComponent.js";
 import CourseGridComponent from "../components/CourseGridComponent.js";
 import CourseEditorComponent from "../components/CourseEditor/CourseEditorComponent.js";
+import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+
 
 class CourseManagerContainer extends React.Component {
     state = {
@@ -25,13 +27,14 @@ class CourseManagerContainer extends React.Component {
     {
         const newCourse = {
             title: this.state.newCourseTitle
-        };
-        const actualCourse = await createCourse(newCourse);
-        const allCourses = await findAllCourses();
+        }
+        const actualCourse = await createCourse(newCourse)
+        console.log(actualCourse)
+        const allCourses = await findAllCourses()
         this.setState({
             courses: allCourses
         })
-    };
+    }
 
     deleteCourse = async (deletedCourse) => {
         const status = await deleteCourse(deletedCourse._id)
@@ -94,51 +97,43 @@ class CourseManagerContainer extends React.Component {
                         </button>
                     </form>
                 </nav>
-                {
-                    this.state.editingCourse
-                    && <CourseEditorComponent hideCourseEditor={this.hideCourseEditor}/>
-                }
-                    {
-                        !this.state.editingCourse &&
-                        <div>
-                            <nav className="navbar navbar-expand-lg d-none d-lg-flex navbar-light bg-light">
-                                <div className="collapse navbar-collapse container">
-                                    <div className="navbar-nav mx-auto w-100 row font-weight-bold">
-                                        <div className="nav-item col-5">
-                                            <a className="nav-link text-secondary wbdv-header wbdv-title" href="#">Title </a>
-                                        </div>
-                                        <div className="nav-item col-2 dropdown">
-                                            <a className="nav-link dropdown-toggle text-secondary wbdv-header wbdv-owner" href="#">Owned
-                                                by </a>
-                                        </div>
-                                        <div className="nav-item col-2">
-                                            <a className="nav-link text-secondary wbdv-header wbdv-last-modified" href="#">Last
-                                                modified </a>
-                                        </div>
-                                        <div className="nav-item col-1">
-                                            <a className="nav-link text-secondary wbdv-button wbdv-grid-layout" onClick={this.toggle} href="#"><i
-                                                className="fas fa-grip-horizontal"></i></a>
-                                        </div>
-                                        <div className="nav-item col">
-                                            <a className="nav-link text-secondary wbdv-header wbdv-sort" href="#"><i
-                                                className="fas fa-sort-alpha-down"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </nav>
-                            {this.state.layout === 'table' &&
+                <Router>
+                    <Route
+                        path="/course-editor/:courseId"
+                        exact={true}
+                        render={(props) =>
+                            <CourseEditorComponent
+                                courseId={props.match.params.courseId}
+                                {...props}/>
+                        }/>
+                    <Route
+                        path="/"
+                        exact={true}
+                        render={() =>
                             <CourseTableComponent
                                 showCourseEditor={this.showCourseEditor}
                                 deleteCourse={this.deleteCourse}
-                                courses={this.state.courses}/>}
-                            {this.state.layout === 'grid' &&
+                                courses={this.state.courses}/>
+                        }/>
+                    <Route
+                        path="/table"
+                        exact={true}
+                        render={() =>
+                            <CourseTableComponent
+                                showCourseEditor={this.showCourseEditor}
+                                deleteCourse={this.deleteCourse}
+                                courses={this.state.courses}/>
+                        }/>
+                    <Route
+                        path="/grid"
+                        exact={true}
+                        render={() =>
                             <CourseGridComponent
                                 showCourseEditor={this.showCourseEditor}
                                 deleteCourse={this.deleteCourse}
-                                courses={this.state.courses}/>}
-                        </div>
-                    }
-
+                                courses={this.state.courses}/>
+                        }/>
+                </Router>
 
             </div>
         );
