@@ -23,10 +23,6 @@ export const updateModule = async (moduleId,module) =>
     return await response.json()
 };
 
-export const findAllModules = () =>
-    fetch(MODULES_API_URL)
-        .then(response => response.json());
-
 export const createModule = (courseId) =>
     fetch(COURSES_MODULES_API_URL(courseId), {
         method: "POST",
@@ -41,6 +37,5 @@ export default {
     deleteModule,
     findModuleForCourse,
     updateModule,
-    findAllModules,
     createModule
 }

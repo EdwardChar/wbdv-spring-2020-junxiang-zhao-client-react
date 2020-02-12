@@ -23,11 +23,9 @@ class ModuleListComponent extends React.Component {
                         </div>
                     </div>
                 )}
-                <li>
-                    <button onClick={
-                        () => this.props.createModule(this.props.courseId)}>
-                        Create</button>
-                </li>
+                <button type="button" className="btn btn-danger float-right wbdv-module-item-add-btn"onClick={
+                    () => this.props.createModule(this.props.courseId)}>
+                    <i className="fas fa-plus"></i></button>
             </div>
         );
     }
@@ -47,14 +45,6 @@ const dispatchToPropertyMapper = (dispatch) => {
                     type: 'FIND_MODULES_FOR_COURSE',
                     modules: actualModules
                 })),
-        findAllModules: () =>
-            // TODO: move all server access to ModuleService.js
-            moduleService.findAllModules()
-                .then(actualModules =>
-                    dispatch({
-                        type: "FIND_ALL_MODULES",
-                        modules: actualModules
-                    })),
         deleteModule: (moduleId) =>
             moduleService.deleteModule(moduleId)
                 .then(status =>
