@@ -1,8 +1,12 @@
-import {LESSONS_API_URL, MODULES_LESSONS_API_URL} from "../common/constants";
+import {LESSONS_API_URL, MODULES_LESSONS_API_URL, MODULES_API_URL, COURSES_MODULES_API_URL} from "../common/constants";
 
 export const findLessonsForModule = (moduleId) =>
-    fetch(`https://wbdv-generic-server.herokuapp.com/api/jannunzi/module/${moduleId}/lessons`)
+    fetch(`${MODULES_API_URL}/${moduleId}/lessons`)
         .then(response => response.json())
+
+export const findAllLessons = () =>
+    fetch(LESSONS_API_URL)
+        .then(response => response.json());
 
 export const createLesson = (moduleId, lesson) =>
     fetch(MODULES_LESSONS_API_URL(moduleId), {
@@ -24,3 +28,9 @@ export const updateLesson = async (lesson) =>
     })
     return await response.json()
 }
+
+export const deleteLesson = (lesson) =>
+    fetch(`${LESSONS_API_URL}/${lesson._id}`, {
+        method: "DELETE"
+    })
+        .then(response => response.json());

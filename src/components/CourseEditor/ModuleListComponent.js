@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {CREATE_MODULE, createModule, DELETE_MODULE, deleteModule} from "../../actions/ModuleActions.js";
 import moduleService, {findModuleForCourse} from '../../services/ModuleServices.js'
+import {COURSES_MODULES_API_URL, MODULES_API_URL} from '../../common/Constants'
 
 class ModuleListComponent extends React.Component {
     componentDidMount() {
@@ -48,26 +49,18 @@ const dispatchToPropertyMapper = (dispatch) => {
                 })),
         findAllModules: () =>
             // TODO: move all server access to ModuleService.js
-            fetch("https://wbdv-generic-server.herokuapp.com/api/jannunzi/modules")
-                .then(response => response.json())
+            moduleService.findAllModules()
                 .then(actualModules =>
                     dispatch({
                         type: "FIND_ALL_MODULES",
                         modules: actualModules
                     })),
         deleteModule: (moduleId) =>
-            moduleService.deleteModule()
+            moduleService.deleteModule(moduleId)
                 .then(status =>
                     dispatch(deleteModule(moduleId))),
         createModule: (courseId) => {
-            fetch(`https://wbdv-generic-server.herokuapp.com/api/jannunzi/courses/${courseId}/modules`, {
-                method: "POST",
-                body: JSON.stringify({title: "New Module"}),
-                headers: {
-                    'content-type': 'application/json'
-                }
-            })
-                .then(response => response.json())
+            moduleService.createModule(courseId)
                 .then(actualModule =>
                     dispatch(createModule(actualModule)))
         }
