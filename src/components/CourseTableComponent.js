@@ -1,7 +1,7 @@
 import React from "react";
 import CourseTableRow from "./CourseRowComponent.js";
 import "./CourseTable.css";
-const CourseTableComponent = ({courses, deleteCourse, showCourseEditor}) =>
+const CourseTableComponent = ({courses, deleteCourse}) =>
     <div>
         <nav className="navbar navbar-expand-lg d-none d-lg-flex navbar-light bg-light">
             <div className="collapse navbar-collapse container">
@@ -32,7 +32,6 @@ const CourseTableComponent = ({courses, deleteCourse, showCourseEditor}) =>
             {
                 courses.map(function(course, index) {
                     return <CourseTableRow
-                        showCourseEditor={showCourseEditor}
                         deleteCourse={deleteCourse}
                         key={course._id}
                         course={course}/>

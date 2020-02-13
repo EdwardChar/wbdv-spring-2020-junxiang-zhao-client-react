@@ -19,7 +19,7 @@ class CourseCardComponent extends React.Component {
                     <div className="card-body">
                         {   !this.state.editing &&
                         <div>
-                            <h5 className="card-title"><a href="/course-editor/myoesi">{this.state.course.title}</a></h5>
+                            <h5 className="card-title"><a href={`/course-editor/${this.state.course._id}`}>{this.state.course.title}</a></h5>
                         </div>
                         }
                         {

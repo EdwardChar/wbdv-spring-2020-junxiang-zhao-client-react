@@ -21,7 +21,7 @@ const CourseEditorComponent = ({match, history, courseId, moduleId, lessonId}) =
         <div>
             <LessonTabComponent courseId={courseId} moduleId={moduleId}/>
             <div className="row mainArea">
-                <ModuleListComponent courseId={courseId}/>
+                <ModuleListComponent courseId={courseId} history={history}/>
                 <div className="col my-3">
                     <TopicPillsComponent lessonId={lessonId} moduleId={moduleId} courseId={courseId}/>
                     <WidgetListComponent/>

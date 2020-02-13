@@ -44,35 +44,6 @@ class CourseManagerContainer extends React.Component {
         })
     };
 
-    showCourseEditor = () =>
-        this.setState({
-            editingCourse: true
-        });
-
-    hideCourseEditor = () =>
-        this.setState({
-            editingCourse: false
-        });
-
-    toggle = () => {
-        this.setState((prevState) => {
-            if (prevState.layout === 'grid') {
-                return {
-                    layout: 'table'
-                }
-            } else {
-                return {
-                    layout: 'grid'
-                }
-            }
-        })
-    }
-
-    updateForm = (e) =>
-        this.setState({
-            newCourseTitle: e.target.value
-        })
-
     render() {
         return (
             <div>
@@ -107,11 +78,29 @@ class CourseManagerContainer extends React.Component {
                                 {...props}/>
                         }/>
                     <Route
+                        path="/course-editor/:courseId/:moduleId"
+                        exact={true}
+                        render={(props) =>
+                            <CourseEditorComponent
+                                courseId={props.match.params.courseId}
+                                moduleId={props.match.params.moduleId}
+                                {...props}/>
+                        }/>
+                    <Route
+                        path="/course-editor/:courseId/:moduleId/:lessonId"
+                        exact={true}
+                        render={(props) =>
+                            <CourseEditorComponent
+                                courseId={props.match.params.courseId}
+                                moduleId={props.match.params.moduleId}
+                                lessonId={props.match.params.lessonId}
+                                {...props}/>
+                        }/>
+                    <Route
                         path="/"
                         exact={true}
                         render={() =>
                             <CourseTableComponent
-                                showCourseEditor={this.showCourseEditor}
                                 deleteCourse={this.deleteCourse}
                                 courses={this.state.courses}/>
                         }/>
@@ -120,7 +109,6 @@ class CourseManagerContainer extends React.Component {
                         exact={true}
                         render={() =>
                             <CourseTableComponent
-                                showCourseEditor={this.showCourseEditor}
                                 deleteCourse={this.deleteCourse}
                                 courses={this.state.courses}/>
                         }/>
@@ -129,7 +117,6 @@ class CourseManagerContainer extends React.Component {
                         exact={true}
                         render={() =>
                             <CourseGridComponent
-                                showCourseEditor={this.showCourseEditor}
                                 deleteCourse={this.deleteCourse}
                                 courses={this.state.courses}/>
                         }/>

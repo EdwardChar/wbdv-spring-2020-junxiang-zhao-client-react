@@ -1,11 +1,11 @@
 import {LESSONS_API_URL, MODULES_LESSONS_API_URL} from "../common/constants";
 
-export const findLessonsForModule = (moduleId) =>
-    fetch(MODULES_LESSONS_API_URL(moduleId))
+export const findLessonsForModule = (lessonId) =>
+    fetch(MODULES_LESSONS_API_URL(lessonId))
         .then(response => response.json())
 
-export const createLesson = (moduleId, lesson) =>
-    fetch(MODULES_LESSONS_API_URL(moduleId), {
+export const createLesson = (lessonId, lesson) =>
+    fetch(MODULES_LESSONS_API_URL(lessonId), {
         method: "POST",
         body: JSON.stringify(lesson),
         headers: {

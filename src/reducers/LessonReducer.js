@@ -1,13 +1,36 @@
-const lessonReducer = (state, action) => {
-    return {
-        lessons: [
-            {title: "Lesson 0000", _id: "000"},
-            {title: "Lesson 123", _id: "123"},
-            {title: "Lesson 234", _id: "234"},
-            {title: "Lesson 345", _id: "345"},
-            {title: "Lesson 456", _id: "456"}
-        ]
+import {CREATE_MODULE, DELETE_MODULE, FIND_MODULES_FOR_COURSE, UPDATE_MODULE} from "../actions/ModuleActions";
+
+const initialState = {
+    modules: [
+    ]
+}
+
+const moduleReducer = (state = initialState, action) => {
+    switch(action.type) {
+        case FIND_MODULES_FOR_COURSE:
+            return {
+                modules: action.modules
+            }
+        case CREATE_MODULE:
+            return {
+                modules: [
+                    ...state.modules,
+                    action.newModule
+                ]
+            }
+        case DELETE_MODULE:
+            return {
+                modules: state.modules.filter(module => module._id !== action.moduleId)
+            }
+        case UPDATE_MODULE:
+            return {
+                modules: state.modules.map(module =>
+                    module._id === action.moduleId ? action.module : module
+                )
+            }
+        default:
+            return state
     }
 }
 
-export default lessonReducer
+export default moduleReducer

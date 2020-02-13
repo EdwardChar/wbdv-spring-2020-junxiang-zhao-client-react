@@ -27,7 +27,7 @@ class CourseTableRow extends React.Component {
                     </div>
                     {   !this.state.editing &&
                         <div className="col-5 wbdv-row wbdv-title">
-                            <a href="/course-editor/myoesi">{this.state.course.title}</a>
+                            <a href={`/course-editor/${this.state.course._id}`}>{this.state.course.title}</a>
                         </div>
                     }
                     {

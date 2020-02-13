@@ -20,7 +20,6 @@ export const updateModule = async (moduleId,module) =>
             'content-type': 'application/json'
         }
     });
-    return await response.json()
 };
 
 export const createModule = (courseId) =>

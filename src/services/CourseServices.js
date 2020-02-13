@@ -34,3 +34,10 @@ export const findAllCourses = () => {
     return fetch(API_URL)
         .then(response => response.json())
 }
+
+export const findCourse = async (courseId) => {
+    const response = await fetch(`${API_URL}/${courseId}`, {
+        method: 'GET'
+    })
+    return await response.json()
+}
