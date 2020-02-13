@@ -1,7 +1,7 @@
 import {
     TOPICS_API_URL,
     LESSONS_TOPICS_API_URL,
-} from "../common/constants";
+} from "../common/Constants";
 
 export const findTopicsForLesson = (lesson) =>
     fetch(LESSONS_TOPICS_API_URL(lesson._id))

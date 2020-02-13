@@ -1,5 +1,8 @@
 import React from "react";
 import {findCourse} from "../../services/CourseServices.js";
+import {connect} from "react-redux";
+import lessonService from "../../services/LessonServices";
+import {createLesson, deleteLesson, findLessonsForModule, updateLesson} from "../../actions/LessonActions";
 
 class LessonTabComponent extends React.Component{
     componentDidMount = async () => {
@@ -8,10 +11,23 @@ class LessonTabComponent extends React.Component{
         this.setState({
             CourseTitle: course.title
         })
+        let lessons = await this.props.findLessonsForModule(this.props.moduleId);
+        console.log(this.props.lessons);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.moduleId !== prevProps.moduleId) {
+            this.props.findLessonsForModule(this.props.moduleId)
+        }
     }
 
     state = {
-        CourseTitle: ""
+        CourseTitle: "",
+        editingLessonId: '',
+        editingLesson: {
+            _id: '',
+            title: ''
+        }
     }
 
     render(){
@@ -28,17 +44,103 @@ class LessonTabComponent extends React.Component{
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav card">
-                        <a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Build</a>
-                        <a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Pages</a>
-                        <a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Theme</a>
-                        <a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Store</a>
-                        <a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Apps</a>
-                        <a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Settings</a>
-                        <button type="button" className="btn btn-secondary wbdv-new-page-btn ml-1"><i className="fas fa-plus"></i>
+                        {this.props.lessons && this.props.lessons.map(lesson =>
+                        <div className="nav-item nav-link bg-secondary wbdv-page-tab"
+                             key={lesson._id}
+                             onClick={() => {
+                                 this.props.history.push(`/course-editor/${this.props.courseId}/module/${this.props.moduleId}/lesson/${lesson._id}`)
+                             }}>
+                            {
+                                lesson._id !== this.state.editingLessonId &&
+                                <div className="card-body">
+                                    <span className="wbdv-module-item-title">{lesson.title}</span>
+                                    <button
+                                        type="button"
+                                        className="close wbdv-module-item-delete-btn"
+                                        onClick={() => this.props.deleteLesson(lesson._id)}>
+                                        <i className="fas fa-times"></i>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="close mx-2 wbdv-module-item-edit-btn"
+                                        onClick={() => {
+                                            this.setState({
+                                                editingLessonId: lesson._id,
+                                                editingLesson: lesson
+                                            });
+                                            this.props.history.push(`/course-editor/${this.props.courseId}/module/${this.props.moduleId}/lesson/${lesson._id}`)
+                                        }}>
+                                        <i className="fas fa-pencil-alt"></i>
+                                    </button>
+                                </div>
+                            }
+                            {
+                                lesson._id === this.state.editingLessonId &&
+                                <div className="card-body">
+                                    <input type="text" className="w-75 wbdv-module-item-title"
+                                           onChange={(e) => this.setState({
+                                               editingLesson: {
+                                                   ...this.state.editingLesson,
+                                                   title: e.target.value
+                                               }
+                                           })}/>
+                                    <button type="button" className="close wbdv-module-item-delete-btn" onClick={() => {
+                                        this.props.updateLesson(lesson._id,this.state.editingLesson);
+                                        this.setState({
+                                            editingLessonId: ''
+                                        });
+                                    }}>
+                                        <i className="fas fa-check"></i>
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    )}
+                        {/*<a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Build</a>*/}
+                        {/*<a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Pages</a>*/}
+                        {/*<a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Theme</a>*/}
+                        {/*<a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Store</a>*/}
+                        {/*<a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Apps</a>*/}
+                        {/*<a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Settings</a>*/}
+                        <button type="button"
+                            className="btn btn-secondary wbdv-new-page-btn ml-1"
+                            onClick={() => this.props.createLesson(this.props.moduleId)}>
+                            <i className="fas fa-plus"></i>
                         </button>
                     </div>
                 </div>
             </nav>)
     }
 }
-export default LessonTabComponent;
+
+const stateToPropertyMapper = (state) => {
+    return {
+        lessons: state.lessons.lessons
+    }
+}
+
+const dispatchToPropertyMapper = (dispatch) => {
+    return {
+        findLessonsForModule: (moduleId) =>
+            lessonService.findLessonsForModule(moduleId)
+                .then(actual => dispatch(findLessonsForModule(actual))),
+        deleteLesson: (lessonId) =>
+            lessonService.deleteLesson(lessonId)
+                .then(status =>
+                    dispatch(deleteLesson(lessonId))),
+        createLesson: (moduleId) =>
+            lessonService.createLesson(moduleId)
+                .then(actual =>
+                    dispatch(createLesson(actual))),
+        updateLesson: (lessonId, lesson) => {
+            lessonService.updateLesson(lessonId, lesson)
+                .then(status =>
+                    dispatch(updateLesson(lesson)))
+        }
+    }
+}
+
+export default connect(
+    stateToPropertyMapper,
+    dispatchToPropertyMapper)
+(LessonTabComponent)
