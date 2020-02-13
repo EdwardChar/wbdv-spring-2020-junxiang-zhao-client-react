@@ -6,12 +6,15 @@ import TopicPillsComponent from "./TopicPillsComponent.js";
 import WidgetListComponent from "./WidgetListComponent.js";
 import moduleReducer from "../../reducers/ModuleReducer";
 import lessonReducer from "../../reducers/LessonReducer";
+import topicReducer from "../../reducers/TopicReducer";
 import {combineReducers, createStore} from "redux";
 import {Provider} from "react-redux";
 
 const rootReducer = combineReducers({
     modules: moduleReducer,
-    lessons: lessonReducer
+    lessons: lessonReducer,
+    topics: topicReducer
+
 });
 
 const store = createStore(rootReducer);
@@ -23,7 +26,7 @@ const CourseEditorComponent = ({match, history, courseId, moduleId, lessonId}) =
             <div className="row mainArea">
                 <ModuleListComponent courseId={courseId} history={history}/>
                 <div className="col my-3">
-                    <TopicPillsComponent lessonId={lessonId} moduleId={moduleId} courseId={courseId}/>
+                    <TopicPillsComponent lessonId={lessonId} moduleId={moduleId} courseId={courseId} history={history}/>
                     <WidgetListComponent/>
                     <button type="button" id="add-widget" className="btn btn-danger float-right wbdv-module-item-add-btn"><i
                         className="fas fa-plus"></i></button>

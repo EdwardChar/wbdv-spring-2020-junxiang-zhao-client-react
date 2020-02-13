@@ -7,12 +7,10 @@ import {createLesson, deleteLesson, findLessonsForModule, updateLesson} from "..
 class LessonTabComponent extends React.Component{
     componentDidMount = async () => {
         let course = await findCourse(this.props.courseId);
-        console.log(course);
         this.setState({
             CourseTitle: course.title
         })
-        let lessons = await this.props.findLessonsForModule(this.props.moduleId);
-        console.log(this.props.lessons);
+        await this.props.findLessonsForModule(this.props.moduleId);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -52,7 +50,7 @@ class LessonTabComponent extends React.Component{
                              }}>
                             {
                                 lesson._id !== this.state.editingLessonId &&
-                                <div className="card-body">
+                                <div>
                                     <span className="wbdv-module-item-title">{lesson.title}</span>
                                     <button
                                         type="button"

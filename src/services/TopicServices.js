@@ -3,22 +3,22 @@ import {
     LESSONS_TOPICS_API_URL,
 } from "../common/Constants";
 
-export const findTopicsForLesson = (lesson) =>
-    fetch(LESSONS_TOPICS_API_URL(lesson._id))
+const findTopicsForLesson = (lessonId) =>
+    fetch(LESSONS_TOPICS_API_URL(lessonId))
         .then(response => response.json());
 
-export const createTopic = (lesson, topic) =>
-    fetch(LESSONS_TOPICS_API_URL(lesson._id), {
+const createTopic = (lessonId) =>
+    fetch(LESSONS_TOPICS_API_URL(lessonId), {
         method: "POST",
-        body: JSON.stringify(topic),
+        body: JSON.stringify({title: "New Topic"}),
         headers: {
             'content-type': 'application/json'
         }
     }).then(response => response.json())
 
-export const updateTopic = async (topic) =>
+const updateTopic = async (topicId, topic) =>
 {
-    const response = await fetch(`${TOPICS_API_URL}/${topic._id}`, {
+    const response = await fetch(`${TOPICS_API_URL}/${topicId}`, {
         method: 'PUT',
         body: JSON.stringify(topic),
         headers: {
@@ -28,8 +28,15 @@ export const updateTopic = async (topic) =>
     return await response.json()
 }
 
-export const deleteTopic = (topic) =>
-    fetch(`${TOPICS_API_URL}/${topic._id}`, {
+const deleteTopic = (topicId) =>
+    fetch(`${TOPICS_API_URL}/${topicId}`, {
         method: "DELETE"
     })
         .then(response => response.json());
+
+export default {
+    createTopic,
+    deleteTopic,
+    updateTopic,
+    findTopicsForLesson
+}

@@ -1,10 +1,10 @@
 import {LESSONS_API_URL, MODULES_LESSONS_API_URL} from "../common/Constants";
 
-export const findLessonsForModule = (moduleId) =>
+const findLessonsForModule = (moduleId) =>
     fetch(MODULES_LESSONS_API_URL(moduleId))
         .then(response => response.json())
 
-export const createLesson = (moduleId) =>
+const createLesson = (moduleId) =>
     fetch(MODULES_LESSONS_API_URL(moduleId), {
         method: "POST",
         body: JSON.stringify({title: "New Lesson"}),
@@ -13,7 +13,7 @@ export const createLesson = (moduleId) =>
         }
     }).then(response => response.json())
 
-export const updateLesson = async (lessonId, lesson) =>
+const updateLesson = async (lessonId, lesson) =>
 {
     const response = await fetch(`${LESSONS_API_URL}/${lessonId}`, {
         method: 'PUT',
@@ -25,7 +25,7 @@ export const updateLesson = async (lessonId, lesson) =>
     return await response.json()
 }
 
-export const deleteLesson = (lessonId) =>
+const deleteLesson = (lessonId) =>
     fetch(`${LESSONS_API_URL}/${lessonId}`, {
         method: "DELETE"
     })

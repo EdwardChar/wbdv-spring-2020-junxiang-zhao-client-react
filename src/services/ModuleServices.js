@@ -1,17 +1,17 @@
 import {COURSES_MODULES_API_URL, MODULES_API_URL} from '../common/Constants'
 
-export const findModuleForCourse = (courseId) =>
+const findModuleForCourse = (courseId) =>
     fetch(COURSES_MODULES_API_URL(courseId))
         .then(response => response.json());
 
 
-export const deleteModule = (moduleId) =>
+const deleteModule = (moduleId) =>
     fetch(`${MODULES_API_URL}/${moduleId}`, {
         method: "DELETE"
     })
         .then(response => response.json());
 
-export const updateModule = async (moduleId,module) =>
+const updateModule = async (moduleId,module) =>
 {
     const response = await fetch(`${MODULES_API_URL}/${moduleId}`, {
         method: 'PUT',
@@ -23,7 +23,7 @@ export const updateModule = async (moduleId,module) =>
     return await response.json()
 };
 
-export const createModule = (courseId) =>
+const createModule = (courseId) =>
     fetch(COURSES_MODULES_API_URL(courseId), {
         method: "POST",
         body: JSON.stringify({title: "New Module"}),
