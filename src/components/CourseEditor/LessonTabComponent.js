@@ -9,9 +9,9 @@ class LessonTabComponent extends React.Component{
         let course = await findCourse(this.props.courseId);
         this.setState({
             CourseTitle: course.title
-        })
+        });
         await this.props.findLessonsForModule(this.props.moduleId);
-    }
+    };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(this.props.moduleId !== prevProps.moduleId) {
@@ -25,7 +25,8 @@ class LessonTabComponent extends React.Component{
         editingLesson: {
             _id: '',
             title: ''
-        }
+        },
+        activeLessonId:''
     }
 
     render(){
@@ -43,9 +44,12 @@ class LessonTabComponent extends React.Component{
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav card">
                         {this.props.lessons && this.props.lessons.map(lesson =>
-                        <div className="nav-item nav-link bg-secondary wbdv-page-tab"
+                        <div className={`nav-item nav-link wbdv-page-tab ${lesson._id === this.state.activeLessonId? "bg-primary":"bg-secondary"}`}
                              key={lesson._id}
                              onClick={() => {
+                                 this.setState({
+                                     activeLessonId: lesson._id
+                                 });
                                  this.props.history.push(`/course-editor/${this.props.courseId}/module/${this.props.moduleId}/lesson/${lesson._id}`)
                              }}>
                             {
@@ -94,17 +98,15 @@ class LessonTabComponent extends React.Component{
                             }
                         </div>
                     )}
-                        {/*<a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Build</a>*/}
-                        {/*<a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Pages</a>*/}
-                        {/*<a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Theme</a>*/}
-                        {/*<a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Store</a>*/}
-                        {/*<a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Apps</a>*/}
-                        {/*<a className="nav-item nav-link bg-secondary wbdv-page-tab" href="#">Settings</a>*/}
-                        <button type="button"
-                            className="btn btn-secondary wbdv-new-page-btn ml-1"
-                            onClick={() => this.props.createLesson(this.props.moduleId)}>
-                            <i className="fas fa-plus"></i>
-                        </button>
+                        {
+                            this.props.moduleId &&
+                            <button type="button"
+                                    className="btn btn-secondary wbdv-new-page-btn ml-1"
+                                    onClick={() => this.props.createLesson(this.props.moduleId)}>
+                                <i className="fas fa-plus"></i>
+                            </button>
+                        }
+
                     </div>
                 </div>
             </nav>)

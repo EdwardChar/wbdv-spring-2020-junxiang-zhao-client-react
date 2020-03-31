@@ -6,7 +6,6 @@ import moduleService from '../../services/ModuleServices.js'
 class ModuleListComponent extends React.Component {
     componentDidMount() {
         let courses = this.props.findModuleForCourse(this.props.courseId);
-        console.log(courses);
     }
 
     state = {

@@ -104,7 +104,7 @@ class CourseManagerContainer extends React.Component {
                                 courseId={props.match.params.courseId}
                                 moduleId={props.match.params.moduleId}
                                 lessonId={props.match.params.lessonId}
-                                topicId={props.match.params.topic}
+                                topicId={props.match.params.topicId}
                                 {...props}/>
                         }/>
                     <Route

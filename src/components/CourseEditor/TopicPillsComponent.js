@@ -6,7 +6,7 @@ import {createTopic, deleteTopic, findTopicsForLesson, updateTopic} from "../../
 class TopicPillsComponent extends React.Component{
     componentDidMount = async () => {
         await this.props.findTopicsForLesson(this.props.lessonId);
-    }
+    };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(this.props.lessonId !== prevProps.lessonId) {
@@ -17,27 +17,31 @@ class TopicPillsComponent extends React.Component{
     state = {
         editingTopicId: '',
         editingTopic: {
-            _id: '',
+            id: '',
             title: ''
-        }
-    }
+        },
+        activeTopicId: ''
+    };
 
     render(){
         return(
             <div className="btn-group wbdv-topic-pill-list">
                 {this.props.topics && this.props.topics.map(topic =>
-                    <div className="btn btn-secondary wbdv-topic-pill"
-                         key={topic._id}
+                    <div className={`btn wbdv-topic-pill ${topic.id === this.state.activeTopicId? "btn-primary":"btn-secondary"}`}
+                         key={topic.id}
                          onClick={() => {
-                             this.props.history.push(`/course-editor/${this.props.courseId}/module/${this.props.moduleId}/lesson/${this.props.lessonId}/topic/${topic._id}`)}}>
+                             this.setState({
+                                 activeTopicId: topic.id
+                             });
+                             this.props.history.push(`/course-editor/${this.props.courseId}/module/${this.props.moduleId}/lesson/${this.props.lessonId}/topic/${topic.id}`)}}>
                         {
-                            topic._id !== this.state.editingTopicId &&
+                            topic.id !== this.state.editingTopicId &&
                             <div>
                                 <span className="wbdv-module-item-title">{topic.title}</span>
                                 <button
                                     type="button"
                                     className="close wbdv-module-item-delete-btn"
-                                    onClick={() => this.props.deleteTopic(topic._id)}>
+                                    onClick={() => this.props.deleteTopic(topic.id)}>
                                     <i className="fas fa-times"></i>
                                 </button>
                                 <button
@@ -45,17 +49,17 @@ class TopicPillsComponent extends React.Component{
                                     className="close mx-2 wbdv-module-item-edit-btn"
                                     onClick={() => {
                                         this.setState({
-                                            editingTopicId: topic._id,
+                                            editingTopicId: topic.id,
                                             editingTopic: topic
                                         });
-                                        this.props.history.push(`/course-editor/${this.props.courseId}/module/${this.props.moduleId}/lesson/${this.props.lessonId}/topic/${topic._id}`)
+                                        this.props.history.push(`/course-editor/${this.props.courseId}/module/${this.props.moduleId}/lesson/${this.props.lessonId}/topic/${topic.id}`)
                                     }}>
                                     <i className="fas fa-pencil-alt"></i>
                                 </button>
                             </div>
                         }
                         {
-                            topic._id === this.state.editingTopicId &&
+                            topic.id === this.state.editingTopicId &&
                             <div className="card-body">
                                 <input type="text" className="w-75 wbdv-module-item-title"
                                     onChange={(e) => this.setState({
@@ -65,7 +69,7 @@ class TopicPillsComponent extends React.Component{
                                         }
                                     })}/>
                                 <button type="button" className="close wbdv-module-item-delete-btn" onClick={() => {
-                                    this.props.updateTopic(topic._id,this.state.editingTopic);
+                                    this.props.updateTopic(topic.id,this.state.editingTopic);
                                     console.log(this.state.editingTopic);
                                     this.setState({
                                         editingTopicId: ''
@@ -77,11 +81,15 @@ class TopicPillsComponent extends React.Component{
                         }
                     </div>
                 )}
-                <button type="button"
-                        className="btn btn-secondary wbdv-new-page-btn ml-1"
-                        onClick={() => this.props.createTopic(this.props.lessonId)}>
-                    <i className="fas fa-plus"></i>
-                </button>
+                {
+                    this.props.lessonId &&
+                    <button type="button"
+                            className="btn btn-secondary wbdv-new-page-btn ml-1"
+                            onClick={() => this.props.createTopic(this.props.lessonId)}>
+                        <i className="fas fa-plus"></i>
+                    </button>
+                }
+
             </div>
         )
     }
@@ -91,7 +99,7 @@ const stateToPropertyMapper = (state) => {
     return {
         topics: state.topics.topics
     }
-}
+};
 
 const dispatchToPropertyMapper = (dispatch) => {
     return {
