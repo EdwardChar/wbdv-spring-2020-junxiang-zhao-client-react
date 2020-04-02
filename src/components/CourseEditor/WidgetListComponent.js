@@ -2,10 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import widgetService from "../../services/WidgetServices";
 import {createWidget, deleteWidget, findWidgetsForTopic, updateWidget} from "../../actions/WidgetActions";
-import HeadingWidgetComponent from "./widgets/HeadingWidgetComponent";
-import ParagraphWidgetComponent from "./widgets/ParagraphWidgetComponent";
-import ListWidgetComponent from "./widgets/ListWidgetComponent";
-import ImageWidgetComponent from "./widgets/ImageWidgetComponent";
+import Widget from "./widgets/Widget";
 class WidgetPillsComponent extends React.Component{
     componentDidMount = async () => {
         if(this.props.topicId)
@@ -54,7 +51,7 @@ class WidgetPillsComponent extends React.Component{
         }
     };
 
-    editContents = (content) => {
+    edit = (content) => {
         this.setState(prevState => ({
             editingWidget:{
                 ...prevState.editingWidget,
@@ -142,22 +139,8 @@ class WidgetPillsComponent extends React.Component{
                                     className="btn btn-warning float-right wbdv-new-page-btn"
                                     onClick={() => this.moveDown(widget)}>
                                 <i className="fas fa-arrow-down"></i></button>
-                            {widget.type === "HEADING" &&
-                                <HeadingWidgetComponent widget={this.state.editingWidgetId === widget.id ? this.state.editingWidget : widget}
-                                                        editing={this.state.editingWidgetId === widget.id} editContents={this.editContents}/>
-                            }
-                            {widget.type === "PARAGRAPH" &&
-                                <ParagraphWidgetComponent widget={this.state.editingWidgetId === widget.id ? this.state.editingWidget : widget}
-                                                          editing={this.state.editingWidgetId === widget.id} editContents={this.editContents}/>
-                            }
-                            {widget.type === "LIST" &&
-                                <ListWidgetComponent widget={this.state.editingWidgetId === widget.id ? this.state.editingWidget : widget}
-                                                     editing={this.state.editingWidgetId === widget.id} editContents={this.editContents}/>
-                            }
-                            {widget.type === "IMAGE" &&
-                                <ImageWidgetComponent widget={this.state.editingWidgetId === widget.id ? this.state.editingWidget : widget}
-                                                      editing={this.state.editingWidgetId === widget.id} editContents={this.editContents}/>
-                            }
+                                <Widget widget={this.state.editingWidgetId === widget.id ? this.state.editingWidget : widget}
+                                                        editing={this.state.editingWidgetId === widget.id} edit={this.edit}/>
                         </div>
                     </div>
                     )

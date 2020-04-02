@@ -1,17 +1,17 @@
 import React from "react";
 
-const ImageWidgetComponent = ({widget,editing,editContents}) =>
+const ImageWidgetComponent = ({widget,editing,edit}) =>
     <div>
         <h2>Image widget</h2>
         {
             editing &&
                 <span>
                     <input type="text" defaultValue={widget.url} placeholder="Image link" className="w-100 my-3"
-                             onChange={(e)=>editContents({
+                             onChange={(e)=>edit({
                                  url: e.target.value
                              })}/>
                     <input type="text" defaultValue={widget.name} placeholder="Widget Name" className="w-100 my-3"
-                           onChange={(e)=>editContents({
+                           onChange={(e)=>edit({
                                name: e.target.value
                            })}/>
                 </span>

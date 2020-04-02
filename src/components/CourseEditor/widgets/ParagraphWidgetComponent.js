@@ -10,12 +10,12 @@ class ParagraphWidgetComponent extends React.Component {
                     <div>
                         <input type="text" defaultValue={this.props.widget.text} placeholder="Paragraph Text" className="w-100 my-3"
                                onChange={(e)=>{
-                                   this.props.editContents({
+                                   this.props.edit({
                                        text: e.target.value
                                    });
                                }}/>
                         <input type="text" defaultValue={this.props.widget.name} placeholder="Widget Name" className="w-100 my-3"
-                               onChange={(e)=>this.props.editContents({
+                               onChange={(e)=>this.props.edit({
                                    name: e.target.value
                                })}/>
                     </div>
