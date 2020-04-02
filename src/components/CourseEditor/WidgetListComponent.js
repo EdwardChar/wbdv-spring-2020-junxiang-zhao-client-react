@@ -19,7 +19,7 @@ class WidgetPillsComponent extends React.Component{
         editingWidgetId: '',
         editingWidget: {
             id: '',
-            title: ''
+            text: ''
         }
     };
 
@@ -77,7 +77,7 @@ class WidgetPillsComponent extends React.Component{
                                                         editingWidgetId: '',
                                                         editingWidget: {
                                                             id: '',
-                                                            title: ''
+                                                            text: ''
                                                         }
                                                     })
                                                 }}>
@@ -91,7 +91,7 @@ class WidgetPillsComponent extends React.Component{
                                                         editingWidgetId: '',
                                                         editingWidget: {
                                                             id: '',
-                                                            title: ''
+                                                            text: ''
                                                         }
                                                     })
                                                 }}>

@@ -23,7 +23,10 @@ const HeadingWidgetComponent = ({widget,editing,edit}) =>
                                 <option value={5}>Heading 5</option>
                                 <option value={6}>Heading 6</option>
                             </select>
-                            <input type="text" placeholder="Widget Name" className="w-100 my-3" />
+                            <input type="text" defaultValue={widget.name} placeholder="Widget Name" className="w-100 my-3"
+                                   onChange={(e)=>edit({
+                                       name: e.target.value
+                                   })}/>
                         </div>
                 }
                 <h3>Preview</h3>

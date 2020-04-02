@@ -12,14 +12,14 @@ const ListWidgetComponent = ({widget,editing,edit}) =>
                                           text: e.target.value
                                       })
                                   }/>
-                        <select className="w-100 float-right"
+                        <select defaultValue={widget.value} className="w-100 float-right"
                                 onChange={(e)=>edit({
                                     value: e.target.value
                                 })}>
                             <option value="ul">Unordered list</option>
                             <option value="ol">Ordered list</option>
                         </select>
-                        <input type="text" placeholder="Widget Name" className="w-100 my-3"
+                        <input type="text" defaultValue={widget.name} placeholder="Widget Name" className="w-100 my-3"
                                onChange={(e)=>edit({
                                    name: e.target.value
                                })}/>
@@ -41,7 +41,7 @@ const ListWidgetComponent = ({widget,editing,edit}) =>
                     <ol>
                         {
                             widget.text.split("\n").map(line =>
-                                <li>{line}</li>
+                                <li key={Math.random()}>{line}</li>
                             )
                         }
                     </ol>
