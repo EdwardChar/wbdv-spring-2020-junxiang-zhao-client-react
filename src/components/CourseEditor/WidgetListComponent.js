@@ -2,18 +2,18 @@ import React from "react";
 import {connect} from "react-redux";
 import widgetService from "../../services/WidgetServices";
 import {createWidget, deleteWidget, findWidgetsForTopic, updateWidget} from "../../actions/WidgetActions";
-import HeadingWidgetComponent from "./HeadingWidgetComponent";
-import ParagraphWidgetComponent from "./ParagraphWidgetComponent";
-import ListWidgetComponent from "./ListWidgetComponent";
-import ImageWidgetComponent from "./ImageWidgetComponent";
+import HeadingWidgetComponent from "./widgets/HeadingWidgetComponent";
+import ParagraphWidgetComponent from "./widgets/ParagraphWidgetComponent";
+import ListWidgetComponent from "./widgets/ListWidgetComponent";
+import ImageWidgetComponent from "./widgets/ImageWidgetComponent";
 class WidgetPillsComponent extends React.Component{
     componentDidMount = async () => {
         if(this.props.topicId)
             await this.props.findWidgetsForTopic(this.props.topicId);
-    }
+    };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.topicId !== prevProps.topicId) {
+        if(this.props.topicId && this.props.topicId !== prevProps.topicId) {
             this.props.findWidgetsForTopic(this.props.topicId)
         }
     }
@@ -24,74 +24,139 @@ class WidgetPillsComponent extends React.Component{
             id: '',
             title: ''
         }
-    }
+    };
 
+    moveUp = (targetWidget) => {
+        let widgets = [...this.props.widgets];
+        if(widgets.length >= 2){
+            for (let i = 1; i < widgets.length; i++){
+                if(targetWidget.id === widgets[i].id){
+                    widgets[i].ordering--;
+                    widgets[i-1].ordering++;
+                    this.props.moveWidget(widgets[i].id,widgets[i],widgets[i-1].id,widgets[i-1],this.props.topicId);
+                    break;
+                }
+            }
+        }
+    };
+
+    moveDown = (targetWidget) => {
+        let widgets = [...this.props.widgets];
+        if(widgets.length >= 2){
+            for (let i = 0; i < widgets.length - 1; i++){
+                if(targetWidget.id === widgets[i].id){
+                    widgets[i].ordering++;
+                    widgets[i+1].ordering--;
+                    this.props.moveWidget(widgets[i].id,widgets[i],widgets[i+1].id,widgets[i+1],this.props.topicId);
+                    break;
+                }
+            }
+        }
+    };
+
+    editContents = (content) => {
+        this.setState(prevState => ({
+            editingWidget:{
+                ...prevState.editingWidget,
+                ...content
+            }
+        }))
+    };
     render(){
         return(
             <div>
                 {
-                    this.props.widgets && this.props.widgets.map(widget =>
-                    <div className="card my-3">
-                        <div className="card-body" key={widget.id}>
+                    this.props.topicId && this.props.widgets && this.props.widgets.map(widget =>
+                    <div className="card my-3" key={widget.id}>
+                        <div className="card-body">
                             {
                                 this.state.editingWidgetId === widget.id &&
+                                    <span>
+                                        <button type="button"
+                                                className="btn btn-secondary float-right wbdv-module-item-save-btn ml-2"
+                                                onClick={() => {
+                                                    this.props.updateWidget(widget.id,this.state.editingWidget);
+                                                    this.setState({
+                                                        editingWidgetId: '',
+                                                        editingWidget: {
+                                                            id: '',
+                                                            title: ''
+                                                        }
+                                                    })
+                                                }}>
+                                            save
+                                        </button>
+                                        <button type="button"
+                                                className="btn btn-danger float-right wbdv-module-item-delete-btn"
+                                                onClick={() => {
+                                                    this.props.deleteWidget(widget.id);
+                                                    this.setState({
+                                                        editingWidgetId: '',
+                                                        editingWidget: {
+                                                            id: '',
+                                                            title: ''
+                                                        }
+                                                    })
+                                                }}>
+                                            <i className="fas fa-times"></i></button>
+                                        <select id="widget"
+                                                defaultValue={widget.type}
+                                                className="custom-select float-right mx-2"
+                                                onChange={(e)=>{
+                                                    this.setState({
+                                                        editingWidget: {
+                                                            ...widget,
+                                                            type: e.target.value
+                                                        }}
+                                                    );
+                                                    this.props.updateWidget(widget.id,{
+                                                        ...widget,
+                                                        type: e.target.value
+                                                    });}}>
+                                            <option value="HEADING">Heading</option>
+                                            <option value="PARAGRAPH">Paragraph</option>
+                                            <option value="LIST">List</option>
+                                            <option value="IMAGE">Image</option>
+                                        </select>
+                                    </span>
+                            }
+                            {
+                                this.state.editingWidgetId !== widget.id &&
                                 <button type="button"
-                                        className="btn btn-secondary float-right wbdv-module-item-save-btn ml-2"
+                                        className="btn btn-secondary float-right wbdv-module-item-edit-btn ml-2"
                                         onClick={() => {
-                                            this.props.updateWidget(widget.id,this.state.editingWidget);
                                             this.setState({
-                                                editingWidgetId: '',
-                                                editingWidget: {
-                                                    id: '',
-                                                    title: ''
+                                                editingWidgetId: widget.id,
+                                                editingWidget: widget
                                                 }
-                                            })
+                                            )
                                         }}>
-                                    save
+                                    edit
                                 </button>
                             }
                             <button type="button"
-                                    className="btn btn-danger float-right wbdv-module-item-delete-btn"
-                                    onClick={() => {
-                                        this.props.deleteWidget(widget.id);
-                                        this.setState({
-                                            editingWidgetId: '',
-                                            editingWidget: {
-                                                id: '',
-                                                title: ''
-                                            }
-                                        })
-                                    }}>
-                                <i className="fas fa-times"></i></button>
-                            <select id="widget"
-                                    className="custom-select float-right mx-2"
-                                    onChange={(e)=>this.setState({
-                                        editingWidgetId:widget.id,
-                                        editingWidget: {
-                                            ...widget,
-                                            type: e.target.value
-                                        }}
-                                    )}>
-                                <option value="HEADING" selected={widget.type === "HEADING"?"selected":""}>Heading</option>
-                                <option value="PARAGRAPH" selected={widget.type === "PARAGRAPH"?"selected":""}>Paragraph</option>
-                                <option value="LIST" selected={widget.type === "LIST"?"selected":""}>List</option>
-                                <option value="IMAGE" selected={widget.type === "IMAGE"?"selected":""}>Image</option>
-                            </select>
-                            <button type="button" className="btn btn-warning float-right wbdv-new-page-btn"><i
-                                className="fas fa-arrow-up"></i></button>
-                            <button type="button" className="btn btn-warning float-right wbdv-new-page-btn"><i
-                                className="fas fa-arrow-down"></i></button>
+                                    className="btn btn-warning float-right wbdv-new-page-btn"
+                                    onClick={() => this.moveUp(widget)}>
+                                <i className="fas fa-arrow-up"></i></button>
+                            <button type="button"
+                                    className="btn btn-warning float-right wbdv-new-page-btn"
+                                    onClick={() => this.moveDown(widget)}>
+                                <i className="fas fa-arrow-down"></i></button>
                             {widget.type === "HEADING" &&
-                                <HeadingWidgetComponent/>
+                                <HeadingWidgetComponent widget={this.state.editingWidgetId === widget.id ? this.state.editingWidget : widget}
+                                                        editing={this.state.editingWidgetId === widget.id} editContents={this.editContents}/>
                             }
                             {widget.type === "PARAGRAPH" &&
-                                <ParagraphWidgetComponent/>
+                                <ParagraphWidgetComponent widget={this.state.editingWidgetId === widget.id ? this.state.editingWidget : widget}
+                                                          editing={this.state.editingWidgetId === widget.id} editContents={this.editContents}/>
                             }
                             {widget.type === "LIST" &&
-                                <ListWidgetComponent/>
+                                <ListWidgetComponent widget={this.state.editingWidgetId === widget.id ? this.state.editingWidget : widget}
+                                                     editing={this.state.editingWidgetId === widget.id} editContents={this.editContents}/>
                             }
                             {widget.type === "IMAGE" &&
-                                <ImageWidgetComponent/>
+                                <ImageWidgetComponent widget={this.state.editingWidgetId === widget.id ? this.state.editingWidget : widget}
+                                                      editing={this.state.editingWidgetId === widget.id} editContents={this.editContents}/>
                             }
                         </div>
                     </div>
@@ -101,7 +166,7 @@ class WidgetPillsComponent extends React.Component{
                     this.props.topicId &&
                         <button type="button" id="add-widget"
                                 className="btn btn-danger float-right wbdv-module-item-add-btn"
-                                onClick={() => this.props.createWidget(this.props.topicId)}>
+                                onClick={() => {this.props.createWidget(this.props.topicId, this.props.widgets.length)}}>
                             <i className="fas fa-plus"></i>
                         </button>
                 }
@@ -110,11 +175,12 @@ class WidgetPillsComponent extends React.Component{
     }
 }
 
+
 const stateToPropertyMapper = (state) => {
     return {
         widgets: state.widgets.widgets
     }
-}
+};
 
 const dispatchToPropertyMapper = (dispatch) => {
     return {
@@ -125,17 +191,23 @@ const dispatchToPropertyMapper = (dispatch) => {
             widgetService.deleteWidget(widgetId)
                 .then(status =>
                     dispatch(deleteWidget(widgetId))),
-        createWidget: (topicId) =>
-            widgetService.createWidget(topicId)
+        createWidget: (topicId, order) =>
+            widgetService.createWidget(topicId, order)
                 .then(actual =>
                     dispatch(createWidget(actual))),
         updateWidget: (widgetId, widget) => {
             widgetService.updateWidget(widgetId, widget)
                 .then(status =>
                     dispatch(updateWidget(widget)))
+        },
+        moveWidget: (targetId, target, movedId, moved, topicId) => {
+            widgetService.updateWidget(targetId, target)
+                .then(status => widgetService.updateWidget(movedId, moved))
+                    .then(status => widgetService.findWidgetsForTopic(topicId))
+                        .then(actual => dispatch(findWidgetsForTopic(actual)))
         }
     }
-}
+};
 
 export default connect(
     stateToPropertyMapper,

@@ -7,10 +7,13 @@ const findWidgetsForTopic = (topicId) =>
     fetch(TOPICS_WIDGETS_API_URL(topicId))
         .then(response => response.json());
 
-const createWidget = (topicId) =>
+const createWidget = (topicId, order) =>
     fetch(TOPICS_WIDGETS_API_URL(topicId), {
         method: "POST",
-        body: JSON.stringify({title: "New Widget"}),
+        body: JSON.stringify({
+            title: "New Widget",
+            ordering: order
+        }),
         headers: {
             'content-type': 'application/json'
         }

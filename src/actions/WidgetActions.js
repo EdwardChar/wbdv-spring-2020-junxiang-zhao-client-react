@@ -2,6 +2,8 @@ export const CREATE_WIDGET = "CREATE_WIDGET";
 export const DELETE_WIDGET = "DELETE_WIDGET";
 export const FIND_WIDGETS_FOR_TOPIC = "FIND_WIDGETS_FOR_TOPIC";
 export const UPDATE_WIDGET = "UPDATE_WIDGET";
+export const MOVE_WIDGET_UP = "MOVE_WIDGET_UP";
+export const MOVE_WIDGET_DOWN = "MOVE_WIDGET_DOWN";
 
 export const deleteWidget = (widgetId) => ({
     type: "DELETE_WIDGET",
