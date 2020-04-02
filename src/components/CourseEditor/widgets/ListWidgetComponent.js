@@ -7,20 +7,20 @@ const ListWidgetComponent = ({widget,editing,edit}) =>
                     editing &&
                     <div>
                         <textarea defaultValue={widget.text} placeholder="Heading Text" className="w-100 my-3"
-                                  onChange={(e)=>
+                                  onChange={(e) =>
                                       edit({
                                           text: e.target.value
                                       })
                                   }/>
                         <select defaultValue={widget.value} className="w-100 float-right"
-                                onChange={(e)=>edit({
+                                onChange={(e) => edit({
                                     value: e.target.value
                                 })}>
                             <option value="ul">Unordered list</option>
                             <option value="ol">Ordered list</option>
                         </select>
                         <input type="text" defaultValue={widget.name} placeholder="Widget Name" className="w-100 my-3"
-                               onChange={(e)=>edit({
+                               onChange={(e) => edit({
                                    name: e.target.value
                                })}/>
                     </div>
