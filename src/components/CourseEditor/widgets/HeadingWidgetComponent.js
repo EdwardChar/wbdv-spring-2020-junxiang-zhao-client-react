@@ -1,22 +1,20 @@
 import React from "react";
 
-class HeadingWidgetComponent extends React.Component {
-    render() {
-        return (
+const HeadingWidgetComponent = ({widget,editing,edit}) =>
             <div>
                 <h2>Heading widget</h2>
                 {
-                    this.props.editing &&
+                    editing &&
                         <div>
-                            <input type="text" placeholder="Heading Text" className="w-100 my-3"
+                            <input type="text" defaultValue={widget.text} placeholder="Heading Text" className="w-100 my-3"
                                    onChange={(e)=>
-                                       this.props.edit({
+                                       edit({
                                            text: e.target.value
                                        })
                                    }/>
                             <select className="w-100 float-right"
-                                    onChange={(e)=>this.props.edit({
-                                        size: e.target.value
+                                    onChange={(e)=>edit({
+                                        size: parseInt(e.target.value)
                                     })}>
                                 <option value={1}>Heading 1</option>
                                 <option value={2}>Heading 2</option>
@@ -30,32 +28,29 @@ class HeadingWidgetComponent extends React.Component {
                 }
                 <h3>Preview</h3>
                 {
-                    this.props.widget.size === 1 &&
-                    <h1>{this.props.widget.text}</h1>
+                    widget.size === 1 &&
+                    <h1>{widget.text}</h1>
                 }
                 {
-                    this.props.widget.size === 2 &&
-                    <h2>{this.props.widget.text}</h2>
+                    widget.size === 2 &&
+                    <h2>{widget.text}</h2>
                 }
                 {
-                    this.props.widget.size === 3 &&
-                    <h3>{this.props.widget.text}</h3>
+                    widget.size === 3 &&
+                    <h3>{widget.text}</h3>
                 }
                 {
-                    this.props.widget.size === 4 &&
-                    <h4>{this.props.widget.text}</h4>
+                    widget.size === 4 &&
+                    <h4>{widget.text}</h4>
                 }
                 {
-                    this.props.widget.size === 5 &&
-                    <h5>{this.props.widget.text}</h5>
+                    widget.size === 5 &&
+                    <h5>{widget.text}</h5>
                 }
                 {
-                    this.props.widget.size === 6 &&
-                    <h6>{this.props.widget.text}</h6>
+                    widget.size === 6 &&
+                    <h6>{widget.text}</h6>
                 }
-            </div>
-        )
-    }
-}
+            </div>;
 
 export default HeadingWidgetComponent;

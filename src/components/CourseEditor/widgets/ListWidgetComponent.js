@@ -1,57 +1,50 @@
 import React from "react";
 
-class ListWidgetComponent extends React.Component {
-
-    render() {
-        return (
+const ListWidgetComponent = ({widget,editing,edit}) =>
             <div>
                 <h2>List widget</h2>
                 {
-                    this.props.editing &&
+                    editing &&
                     <div>
-                        <textarea placeholder="Heading Text" className="w-100 my-3"
+                        <textarea defaultValue={widget.text} placeholder="Heading Text" className="w-100 my-3"
                                   onChange={(e)=>
-                                      this.props.edit({
+                                      edit({
                                           text: e.target.value
                                       })
                                   }/>
                         <select className="w-100 float-right"
-                                onChange={(e)=>this.setState({
-                                    ordered: e.target.value
+                                onChange={(e)=>edit({
+                                    value: e.target.value
                                 })}>
                             <option value="ul">Unordered list</option>
                             <option value="ol">Ordered list</option>
                         </select>
                         <input type="text" placeholder="Widget Name" className="w-100 my-3"
-                               onChange={(e)=>this.props.edit({
+                               onChange={(e)=>edit({
                                    name: e.target.value
                                })}/>
                     </div>
                 }
                 <h3>Preview</h3>
                 {
-                    this.props.widget.ordered === "ul" &&
+                    widget.value === "ul" &&
                     <ul className="mx-2">
                         {
-                            this.props.widget.text.split("\n").map(line =>
+                            widget.text.split("\n").map(line =>
                                 <li key={Math.random()}>{line}</li>
                             )
                         }
                     </ul>
                 }
                 {
-                    this.props.widget.ordered === "ol" &&
+                    widget.value === "ol" &&
                     <ol>
                         {
-                            this.props.widget.text.split("\n").map(line =>
+                            widget.text.split("\n").map(line =>
                                 <li>{line}</li>
                             )
                         }
                     </ol>
                 }
-            </div>
-        )
-    }
-}
-
+            </div>;
 export default ListWidgetComponent;

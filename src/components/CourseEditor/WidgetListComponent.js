@@ -99,17 +99,11 @@ class WidgetPillsComponent extends React.Component{
                                         <select id="widget"
                                                 defaultValue={widget.type}
                                                 className="custom-select float-right mx-2"
-                                                onChange={(e)=>{
-                                                    this.setState({
-                                                        editingWidget: {
-                                                            ...widget,
-                                                            type: e.target.value
-                                                        }}
-                                                    );
-                                                    this.props.updateWidget(widget.id,{
-                                                        ...widget,
+                                                onChange={(e)=>
+                                                    this.edit( {
                                                         type: e.target.value
-                                                    });}}>
+                                                    })
+                                                }>
                                             <option value="HEADING">Heading</option>
                                             <option value="PARAGRAPH">Paragraph</option>
                                             <option value="LIST">List</option>
@@ -131,16 +125,21 @@ class WidgetPillsComponent extends React.Component{
                                     edit
                                 </button>
                             }
-                            <button type="button"
+                            {
+                                widget.ordering > 0 &&
+                                <button type="button"
                                     className="btn btn-warning float-right wbdv-new-page-btn"
                                     onClick={() => this.moveUp(widget)}>
                                 <i className="fas fa-arrow-up"></i></button>
-                            <button type="button"
+                            }
+                            {
+                                widget.ordering < this.props.widgets.length - 1 &&
+                                <button type="button"
                                     className="btn btn-warning float-right wbdv-new-page-btn"
                                     onClick={() => this.moveDown(widget)}>
-                                <i className="fas fa-arrow-down"></i></button>
-                                <Widget widget={this.state.editingWidgetId === widget.id ? this.state.editingWidget : widget}
-                                                        editing={this.state.editingWidgetId === widget.id} edit={this.edit}/>
+                                <i className="fas fa-arrow-down"></i></button>}
+                            <Widget widget={this.state.editingWidgetId === widget.id ? this.state.editingWidget : widget}
+                                                    editing={this.state.editingWidgetId === widget.id} edit={this.edit}/>
                         </div>
                     </div>
                     )
