@@ -26,7 +26,7 @@ class LessonTabComponent extends React.Component{
             _id: '',
             title: ''
         },
-        activeLessonId:''
+        activeLessonId: this.props.lessonId
     }
 
     render(){

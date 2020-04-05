@@ -23,11 +23,11 @@ const store = createStore(rootReducer);
 const CourseEditorComponent = ({match, history, courseId, moduleId, lessonId, topicId}) =>
     <Provider store={store}>
         <div>
-            <LessonTabComponent courseId={courseId} moduleId={moduleId} history={history}/>
+            <LessonTabComponent lessonId={lessonId} courseId={courseId} moduleId={moduleId} history={history}/>
             <div className="row mainArea">
-                <ModuleListComponent courseId={courseId} history={history}/>
+                <ModuleListComponent moduleId={moduleId} courseId={courseId} history={history}/>
                 <div className="col my-3">
-                    <TopicPillsComponent lessonId={lessonId} moduleId={moduleId} courseId={courseId} history={history}/>
+                    <TopicPillsComponent topicId={topicId} lessonId={lessonId} moduleId={moduleId} courseId={courseId} history={history}/>
                     <WidgetListComponent topicId={topicId} lessonId={lessonId} moduleId={moduleId} courseId={courseId} history={history}/>
                 </div>
             </div>

@@ -9,7 +9,7 @@ class ModuleListComponent extends React.Component {
     }
 
     state = {
-        activeModuleId: '',
+        activeModuleId: this.props.moduleId,
         editingModuleId: '',
         editingModule: {
             _id: '',

@@ -20,7 +20,7 @@ class TopicPillsComponent extends React.Component{
             id: '',
             title: ''
         },
-        activeTopicId: ''
+        activeTopicId: parseInt(this.props.topicId)
     };
 
     render(){
