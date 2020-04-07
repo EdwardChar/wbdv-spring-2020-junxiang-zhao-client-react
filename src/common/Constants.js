@@ -5,5 +5,5 @@ export const TOPICS_API_URL = "http://wbdv-junxiang-zhao-server-java.herokuapp.c
 export const WIDGETS_API_URL = "http://wbdv-junxiang-zhao-server-java.herokuapp.com/api/widgets"
 export const COURSES_MODULES_API_URL = (courseId) => `https://wbdv-generic-server.herokuapp.com/api/001057049/courses/${courseId}/modules`
 export const MODULES_LESSONS_API_URL = (moduleId) => `https://wbdv-generic-server.herokuapp.com/api/001057049/modules/${moduleId}/lessons`
-export const LESSONS_TOPICS_API_URL = (lessonId) => `http://localhost:8080/api/lessons/${lessonId}/topics`
-export const TOPICS_WIDGETS_API_URL = (widgetId) => `http://localhost:8080/api/topics/${widgetId}/widgets`
+export const LESSONS_TOPICS_API_URL = (lessonId) => `http://wbdv-junxiang-zhao-server-java.herokuapp.com/api/lessons/${lessonId}/topics`
+export const TOPICS_WIDGETS_API_URL = (widgetId) => `http://wbdv-junxiang-zhao-server-java.herokuapp.com/api/topics/${widgetId}/widgets`
